@@ -167,60 +167,6 @@
         <div class="dashed-line"></div>
         <div class="finish-line"></div>
     </div>
-    <script>
-        const diceImgs = [
-            "horse.png", // 0: Horse side
-            "sheep.png", // 1: Sheep side
-            "camel.png", // 2: Camel side
-            "goat.png"   // 3: Goat side
-        ];
-
-        const horseSide = 0; // Index for horse side
-
-        let positions = [0, 0];
-        let currentPlayer = 0;
-        const stepSize = 90; // px per step
-        const finishLine = 7; // number of steps to finish
-
-        document.getElementById('rollBtn').addEventListener('click', () => {
-            let horseCount = 0;
-            for (let i = 1; i <= 4; i++) {
-                const roll = Math.floor(Math.random() * 4); // 0-3 for 4 sides
-                document.getElementById('dice' + i).src = diceImgs[roll];
-                if (roll === horseSide) horseCount++;
-            }
-            // Move horse
-            positions[currentPlayer] += horseCount;
-            if (positions[currentPlayer] > finishLine) positions[currentPlayer] = finishLine;
-            document.getElementById('horse' + (currentPlayer + 1)).style.left = (200 + positions[currentPlayer] * stepSize) + 'px';
-
-            // Check win
-            if (positions[currentPlayer] >= finishLine) {
-                document.getElementById('winnerMsg').innerText = `Тоглогч ${currentPlayer + 1} яллаа!`;
-                document.getElementById('winnerMsg').style.display = 'block';
-                document.getElementById('rollBtn').disabled = true;
-                document.getElementById('resetBtn').style.display = 'inline-block';
-                return;
-            }
-
-            // Switch player
-            currentPlayer = 1 - currentPlayer;
-        });
-
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            positions = [0, 0];
-            document.getElementById('horse1').style.left = '200px';
-            document.getElementById('horse2').style.left = '200px';
-            document.getElementById('winnerMsg').style.display = 'none';
-            document.getElementById('rollBtn').disabled = false;
-            document.getElementById('resetBtn').style.display = 'none';
-            currentPlayer = 0;
-            // Reset dice images if you want
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById('dice' + i).src = diceImgs[i - 1];
-            }
-        });
-    </script>
 </body>
 
 </html>
