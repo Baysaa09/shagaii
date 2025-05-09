@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="mn">
-
 <head>
     <meta charset="UTF-8">
     <title>Horse Race Game</title>
-    <link rel="stylesheet" href="lab9.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -109,10 +107,8 @@
         .dashed-line {
             position: absolute;
             left: 200px;
-            /* Align with horse start */
             top: 150px;
             width: calc(7 * 90px);
-            /* 7 steps, each 90px */
             height: 4px;
             background: repeating-linear-gradient(to right,
                     #222 0px,
@@ -126,7 +122,6 @@
         .finish-line {
             position: absolute;
             left: calc(200px + 7 * 90px);
-            /* Align with horse finish */
             top: 0;
             width: 16px;
             height: 300px;
@@ -135,7 +130,7 @@
                     #000 12px,
                     #fff 12px,
                     #fff 24px);
-            z-index: 3;
+            z-index: 3  ;
             border-radius: 2px;
             box-shadow: 0 0 8px #888;
         }
@@ -144,10 +139,10 @@
 
 <body>
     <div class="dice-row" id="dice-row">
-        <img src="horse.png" class="dice" id="dice1">
-        <img src="sheep.png" class="dice" id="dice2">
-        <img src="camel.png" class="dice" id="dice3">
-        <img src="goat.png" class="dice" id="dice4">
+        <img src="horse.png.jpg" class="dice" id="dice1">
+        <img src="sheep.png.jpg" class="dice" id="dice2">
+        <img src="camel.png.jpg" class="dice" id="dice3">
+        <img src="goat.png.jpg" class="dice" id="dice4">
         <button id="rollBtn">Шагай орхих</button>
         <button id="resetBtn" style="display:none; margin-left:20px;">Дахин тоглох</button>
     </div>
@@ -156,73 +151,42 @@
     <div class="track">
         <div class="player-row">
             <span class="player-label">ТОГЛОГЧ 1</span>
-            <img src="real_horse.png" class="horse" id="horse1">
+            <img src="real_horse.png.jpg" class="horse" id="horse1">
 
         </div>
 
         <div class="player-row">
             <span class="player-label">ТОГЛОГЧ 2</span>
-            <img src="real_horse.png" class="horse" id="horse2">
+            <img src="real_horse.png.jpg" class="horse" id="horse2">
         </div>
         <div class="dashed-line"></div>
         <div class="finish-line"></div>
     </div>
     <script>
         const diceImgs = [
-            "horse.png", // 0: Horse side
-            "sheep.png", // 1: Sheep side
-            "camel.png", // 2: Camel side
-            "goat.png"   // 3: Goat side
+            "horse.png.jpg", 
+            "sheep.png.jpg", 
+            "camel.png.jpg", 
+            "goat.png.jpg"   
         ];
 
-        const horseSide = 0; // Index for horse side
+        const horseSide = 0; 
 
         let positions = [0, 0];
         let currentPlayer = 0;
-        const stepSize = 90; // px per step
-        const finishLine = 7; // number of steps to finish
+        const stepSize = 90; 
+        const finishLine = 7; 
 
         document.getElementById('rollBtn').addEventListener('click', () => {
             let horseCount = 0;
             for (let i = 1; i <= 4; i++) {
-                const roll = Math.floor(Math.random() * 4); // 0-3 for 4 sides
+                const roll = Math.floor(Math.random() * 4); 
                 document.getElementById('dice' + i).src = diceImgs[roll];
                 if (roll === horseSide) horseCount++;
             }
-            // Move horse
             positions[currentPlayer] += horseCount;
-            if (positions[currentPlayer] > finishLine) positions[currentPlayer] = finishLine;
+            if (positions[currentPlayer] > finishLine) positions[currentPlayer] = finishLine; //Toglogchiin barilal barianii shugmand ochvol barianii shugmand hursen gj uzne 
             document.getElementById('horse' + (currentPlayer + 1)).style.left = (200 + positions[currentPlayer] * stepSize) + 'px';
 
-            // Check win
-            if (positions[currentPlayer] >= finishLine) {
-                document.getElementById('winnerMsg').innerText = `Тоглогч ${currentPlayer + 1} яллаа!`;
-                document.getElementById('winnerMsg').style.display = 'block';
-                document.getElementById('rollBtn').disabled = true;
-                document.getElementById('resetBtn').style.display = 'inline-block';
-                return;
-            }
-
-            // Switch player
-            currentPlayer = 1 - currentPlayer;
-        });
-
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            positions = [0, 0];
-            document.getElementById('horse1').style.left = '200px';
-            document.getElementById('horse2').style.left = '200px';
-            document.getElementById('winnerMsg').style.display = 'none';
-            document.getElementById('rollBtn').disabled = false;
-            document.getElementById('resetBtn').style.display = 'none';
-            currentPlayer = 0;
-            // Reset dice images if you want
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById('dice' + i).src = diceImgs[i - 1];
-            }
-        });
-    </script>
-</body>
-
-</html>
-
+ 
 </html>
